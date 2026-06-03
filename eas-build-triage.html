@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EAS Build Failed? Expo Release Triage Checklist</title>
+    <meta
+      name="description"
+      content="A practical Expo and React Native EAS Build triage checklist for build failures, TestFlight blockers, environment variable issues, and release-only bugs."
+    >
+    <link rel="canonical" href="https://expo-release-rescue.vercel.app/eas-build-triage.html">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Cpath d='M8 17l5 5L24 10' fill='none' stroke='%23168347' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <meta property="og:title" content="EAS Build Failed? Expo Release Triage Checklist">
+    <meta property="og:description" content="A practical EAS Build triage checklist for Expo and React Native teams trying to ship.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://expo-release-rescue.vercel.app/eas-build-triage.html">
+    <meta property="og:image" content="https://expo-release-rescue.vercel.app/assets/hero-build-success.png">
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f9fb;
+        --paper: #ffffff;
+        --ink: #121826;
+        --muted: #5c6676;
+        --line: #dbe2ea;
+        --blue: #0b5cff;
+        --green: #168347;
+        --radius: 8px;
+        --max: 900px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.6;
+      }
+
+      a {
+        color: var(--blue);
+        font-weight: 720;
+        text-decoration: none;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1120px;
+        min-height: 68px;
+        margin: 0 auto;
+        padding: 0 22px;
+        gap: 18px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-size: 19px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border: 1px solid #c7d5e6;
+        border-radius: 8px;
+        color: var(--green);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid var(--blue);
+        border-radius: 7px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 780;
+      }
+
+      main {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 54px 22px 72px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 20px;
+        padding-bottom: 34px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      ul,
+      ol {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin-bottom: 0;
+        font-size: clamp(38px, 6vw, 58px);
+        line-height: 1.04;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 740px;
+        color: #455163;
+        font-size: 20px;
+      }
+
+      section {
+        padding: 34px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h2 {
+        margin-bottom: 12px;
+        font-size: 28px;
+        line-height: 1.18;
+      }
+
+      h3 {
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+        padding: 22px;
+      }
+
+      .steps {
+        display: grid;
+        gap: 16px;
+        margin: 20px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .steps li {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      .index {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e8f7ee;
+        color: var(--green);
+        font-weight: 820;
+      }
+
+      code {
+        border: 1px solid #d9e2ed;
+        border-radius: 6px;
+        background: #fff;
+        padding: 2px 6px;
+        color: #1c2b3f;
+        font-size: 0.94em;
+      }
+
+      .cta {
+        display: grid;
+        gap: 14px;
+        margin-top: 34px;
+        border: 1px solid #91d2aa;
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 24px;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      @media (max-width: 640px) {
+        nav {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 14px 16px;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        main {
+          padding: 34px 16px 56px;
+        }
+
+        .lead {
+          font-size: 17px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          Expo Release Rescue
+        </a>
+        <a class="button" href="mailto:badabadabing@live.com?subject=Expo%20Release%20Rescue%20intake">Email the issue</a>
+      </nav>
+    </header>
+
+    <main>
+      <article>
+        <div class="hero">
+          <h1>EAS Build failed? Use this triage checklist before you lose another release day.</h1>
+          <p class="lead">
+            A practical first-pass checklist for Expo and React Native teams stuck on EAS Build,
+            TestFlight, App Store Connect, environment variables, or release-only behavior.
+          </p>
+        </div>
+
+        <section>
+          <h2>1. Reproduce the failure as close to release as possible</h2>
+          <p>
+            Expo's build troubleshooting guidance recommends narrowing the source of the error and,
+            when possible, reproducing locally with native tooling. For release-like behavior, compare
+            the failing EAS profile with local release commands such as <code>npx expo run:ios</code>
+            or <code>npx expo run:android</code>.
+          </p>
+          <p class="muted">
+            Source: <a href="https://docs.expo.dev/build-reference/troubleshooting/">Expo build troubleshooting</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Confirm the failing profile and environment</h2>
+          <div class="panel">
+            <ol class="steps">
+              <li>
+                <span class="index">1</span>
+                <div>
+                  <h3>Check the exact profile</h3>
+                  <p>Verify whether the failure is in <code>development</code>, <code>preview</code>, or <code>production</code>.</p>
+                </div>
+              </li>
+              <li>
+                <span class="index">2</span>
+                <div>
+                  <h3>Check EAS environment variables</h3>
+                  <p>EAS has separate environment sets, so a variable that exists locally may be missing from the build job.</p>
+                </div>
+              </li>
+              <li>
+                <span class="index">3</span>
+                <div>
+                  <h3>Check public vs sensitive variables</h3>
+                  <p>Client-side variables need the right exposure path; secrets should not be shipped into the app bundle.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <p class="muted">
+            Source: <a href="https://docs.expo.dev/eas/environment-variables/">Expo EAS environment variables</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Separate build errors from submit errors</h2>
+          <p>
+            A successful archive can still fail during submission. If the build succeeded but upload
+            fails, inspect EAS Submit separately: Apple and Google submission steps have their own
+            credentials, app identifiers, tracks, and metadata requirements.
+          </p>
+          <p class="muted">
+            Source: <a href="https://docs.expo.dev/submit/introduction/">Expo EAS Submit</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Package the evidence before asking for help</h2>
+          <p>A good rescue request should include:</p>
+          <ul>
+            <li>Expo SDK version and React Native version</li>
+            <li>The failing command and EAS profile</li>
+            <li>Full EAS build or submit URL/log excerpt</li>
+            <li><code>app.json</code>, <code>app.config.*</code>, <code>eas.json</code>, and package manager lockfile</li>
+            <li>Whether the issue happens in Expo Go, development build, preview build, production build, or TestFlight only</li>
+          </ul>
+        </section>
+
+        <div class="cta">
+          <h2>Need a fixed-scope rescue?</h2>
+          <p>
+            Send the repo or a minimal reproduction, the exact error output, target platform,
+            EAS build profile, Expo SDK version, and deadline.
+          </p>
+          <p>
+            <a href="mailto:badabadabing@live.com?subject=Expo%20Release%20Rescue%20intake">badabadabing@live.com</a>
+            or start from the <a href="index.html#intake">service intake form</a>.
+          </p>
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

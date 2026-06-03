@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://expo-release-rescue.vercel.app/sitemap.xml
