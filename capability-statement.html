@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expo Release Rescue Capability Statement</title>
+    <meta
+      name="description"
+      content="Contractor capability statement for fixed-scope Expo and React Native release rescue, EAS Build triage, TestFlight blockers, native module issues, and production hotfixes."
+    >
+    <link rel="canonical" href="https://expo-release-rescue.vercel.app/capability-statement.html">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Cpath d='M8 17l5 5L24 10' fill='none' stroke='%23168347' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <meta property="og:title" content="Expo Release Rescue Capability Statement">
+    <meta property="og:description" content="Fixed-scope Expo and React Native release engineering support for teams with active build, TestFlight, or production blockers.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://expo-release-rescue.vercel.app/capability-statement.html">
+    <meta property="og:image" content="https://expo-release-rescue.vercel.app/assets/hero-build-success.png">
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f9fb;
+        --paper: #ffffff;
+        --ink: #121826;
+        --muted: #5c6676;
+        --line: #dbe2ea;
+        --blue: #0b5cff;
+        --green: #168347;
+        --radius: 8px;
+        --max: 920px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.6;
+      }
+
+      a {
+        color: var(--blue);
+        font-weight: 720;
+        text-decoration: none;
+      }
+
+      header {
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1120px;
+        min-height: 68px;
+        margin: 0 auto;
+        padding: 0 22px;
+        gap: 18px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-size: 19px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border: 1px solid #c7d5e6;
+        border-radius: 8px;
+        color: var(--green);
+      }
+
+      .nav-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 14px;
+        font-weight: 720;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid var(--blue);
+        border-radius: 7px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 780;
+      }
+
+      main {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 54px 22px 72px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 20px;
+        padding-bottom: 34px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      ul {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin-bottom: 0;
+        font-size: clamp(38px, 6vw, 58px);
+        line-height: 1.04;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 760px;
+        color: #455163;
+        font-size: 20px;
+      }
+
+      section {
+        padding: 34px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h2 {
+        margin-bottom: 12px;
+        font-size: 28px;
+        line-height: 1.18;
+      }
+
+      h3 {
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+        padding: 22px;
+      }
+
+      .panel p:last-child,
+      .panel ul:last-child {
+        margin-bottom: 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .facts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .fact {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 16px;
+      }
+
+      .fact strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 15px;
+      }
+
+      .fact span {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .checklist {
+        display: grid;
+        gap: 12px;
+        padding-left: 20px;
+      }
+
+      .cta {
+        display: grid;
+        gap: 14px;
+        border: 1px solid #b9c7d8;
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 24px;
+      }
+
+      .cta p {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 760px) {
+        nav {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 14px 20px;
+        }
+
+        .nav-actions {
+          flex-wrap: wrap;
+        }
+
+        main {
+          padding-top: 40px;
+        }
+
+        .grid,
+        .facts {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav aria-label="Main navigation">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          Expo Release Rescue
+        </a>
+        <div class="nav-actions">
+          <a href="eas-build-triage.html">Triage guide</a>
+          <a class="button" href="mailto:badabadabing@live.com?subject=Expo%20Release%20Rescue%20contract%20fit">Discuss a blocker</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Contractor capability statement for Expo and React Native release rescue.</h1>
+        <p class="lead">
+          Fixed-scope help for teams that already have an Expo or React Native app and need a release blocker diagnosed quickly without turning the engagement into a broad rewrite.
+        </p>
+        <div class="facts">
+          <div class="fact">
+            <strong>Primary fit</strong>
+            <span>EAS Build, TestFlight, App Store, native module, and crash-log triage.</span>
+          </div>
+          <div class="fact">
+            <strong>Working mode</strong>
+            <span>Remote fixed-scope diagnostic, release rescue, or short contract sprint.</span>
+          </div>
+          <div class="fact">
+            <strong>Contact</strong>
+            <span><a href="mailto:badabadabing@live.com">badabadabing@live.com</a></span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Best-fit blockers</h2>
+        <div class="grid">
+          <div class="panel">
+            <h3>Build and release failures</h3>
+            <ul class="checklist">
+              <li>EAS Build failures on iOS or Android.</li>
+              <li>TestFlight build installs but crashes on launch.</li>
+              <li>App Store submission or metadata blockers.</li>
+              <li>CI/CD release flow breaks after dependency or SDK changes.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>Runtime and native issues</h3>
+            <ul class="checklist">
+              <li>CocoaPods, Gradle, Xcode, or native module conflicts.</li>
+              <li>Release-only crashes that do not reproduce in Expo Go.</li>
+              <li>Push notification, WebView, deep-link, or config-plugin failures.</li>
+              <li>Expo SDK and React Native upgrade regressions.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>What a diagnostic needs</h2>
+        <div class="panel">
+          <ul class="checklist">
+            <li>Expo SDK and React Native versions.</li>
+            <li>Target platform and exact release deadline.</li>
+            <li>EAS profile, build logs, crash logs, screenshots, and App Store Connect or TestFlight error text.</li>
+            <li>Repository access or a minimal reproduction when available.</li>
+            <li>List of native modules, config plugins, and recent dependency changes.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Proof links</h2>
+        <div class="grid">
+          <div class="panel">
+            <h3>Service page</h3>
+            <p class="muted">Packages, intake flow, pricing, and proposal copy.</p>
+            <p><a href="index.html">Open Expo Release Rescue</a></p>
+          </div>
+          <div class="panel">
+            <h3>Public repository</h3>
+            <p class="muted">Static service site source and triage assets.</p>
+            <p><a href="https://github.com/badabadabing/expo-release-rescue">Open GitHub repo</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Engagement shapes</h2>
+        <div class="grid">
+          <div class="panel">
+            <h3>Fixed diagnostic</h3>
+            <p>Review the logs and configuration, identify the likely root cause, and return a prioritized patch plan or minimal code fix when access is available.</p>
+          </div>
+          <div class="panel">
+            <h3>Short rescue sprint</h3>
+            <p>Work through one release blocker end to end with repo access, logs, a target build profile, and a clear shipping deadline.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <h2>Send the failing build context.</h2>
+        <p class="muted">A useful first email includes the Expo SDK/RN versions, target platform, build logs or crash logs, release deadline, and whether repo access is available.</p>
+        <p><a class="button" href="mailto:badabadabing@live.com?subject=Expo%20Release%20Rescue%20contract%20fit">Email the blocker</a></p>
+      </section>
+    </main>
+  </body>
+</html>
