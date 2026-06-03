@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Implementation Sprint</title>
+    <meta
+      name="description"
+      content="Fixed-scope implementation help for Python automation, TypeScript web tools, AI-assisted workflows, agentic QA, and documentation-to-working-code tasks."
+    >
+    <link rel="canonical" href="https://expo-release-rescue.vercel.app/ai-implementation-sprint.html">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Cpath d='M8 17l5 5L24 10' fill='none' stroke='%23168347' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <meta property="og:title" content="AI Implementation Sprint">
+    <meta property="og:description" content="Fixed-scope implementation support for automation, web tools, AI-assisted workflows, and agentic QA.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://expo-release-rescue.vercel.app/ai-implementation-sprint.html">
+    <meta property="og:image" content="https://expo-release-rescue.vercel.app/assets/hero-build-success.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "AI Implementation Sprint",
+        "url": "https://expo-release-rescue.vercel.app/ai-implementation-sprint.html",
+        "email": "badabadabing@live.com",
+        "areaServed": "Worldwide",
+        "serviceType": "Fixed-scope AI-assisted software implementation",
+        "description": "Fixed-scope implementation help for Python automation, TypeScript web tools, AI-assisted workflows, agentic QA, and documentation-to-working-code tasks."
+      }
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f9fb;
+        --paper: #ffffff;
+        --ink: #121826;
+        --muted: #5c6676;
+        --line: #dbe2ea;
+        --line-strong: #b9c7d8;
+        --blue: #0b5cff;
+        --blue-dark: #0742bd;
+        --green: #168347;
+        --green-soft: #e8f7ee;
+        --radius: 8px;
+        --max: 1120px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(219, 226, 234, 0.8);
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: var(--max);
+        min-height: 68px;
+        margin: 0 auto;
+        padding: 0 22px;
+        gap: 22px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border: 1px solid #c7d5e6;
+        border-radius: 8px;
+        color: var(--green);
+        background: #fff;
+      }
+
+      .nav-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 14px;
+        font-weight: 720;
+      }
+
+      .nav-actions a:not(.button) {
+        color: #2e3847;
+      }
+
+      .nav-actions a:not(.button):hover {
+        color: var(--blue);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid transparent;
+        border-radius: 7px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 780;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .button:hover {
+        background: var(--blue-dark);
+      }
+
+      .button.secondary {
+        border-color: #9ebcff;
+        background: #fff;
+        color: var(--blue);
+      }
+
+      .button.secondary:hover {
+        border-color: var(--blue);
+        background: #fff;
+      }
+
+      main {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 52px 22px 74px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        align-items: start;
+        gap: 34px;
+        padding-bottom: 44px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      ul {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin-bottom: 0;
+        font-size: clamp(38px, 6vw, 58px);
+        line-height: 1.04;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin-bottom: 12px;
+        font-size: 28px;
+        line-height: 1.18;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        margin-bottom: 8px;
+        font-size: 18px;
+        line-height: 1.24;
+      }
+
+      .lead {
+        max-width: 740px;
+        margin-top: 20px;
+        color: #455163;
+        font-size: 20px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .summary-panel {
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 22px;
+      }
+
+      .summary-panel strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 15px;
+      }
+
+      .summary-panel p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      section {
+        padding: 36px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-title {
+        max-width: 760px;
+      }
+
+      .section-title p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 22px;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel,
+      .package-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+        padding: 22px;
+      }
+
+      .panel p,
+      .package-card p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .package-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 310px;
+      }
+
+      .package-card.featured {
+        border-color: #91d2aa;
+        box-shadow: 0 16px 42px rgba(22, 131, 71, 0.1);
+      }
+
+      .package-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .price {
+        color: var(--ink);
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .feature-list {
+        display: grid;
+        gap: 12px;
+        margin: 22px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .feature-list li {
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr);
+        gap: 9px;
+        color: #303b4c;
+        font-size: 14px;
+      }
+
+      .feature-list li::before {
+        content: "\2713";
+        display: grid;
+        place-items: center;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--green-soft);
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .duration {
+        margin-top: auto;
+        padding-top: 24px;
+        color: #344154;
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .step {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 20px;
+      }
+
+      .step-index {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 14px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        font-weight: 800;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .cta {
+        display: grid;
+        gap: 14px;
+        border: 1px solid #91d2aa;
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 24px;
+      }
+
+      .cta p {
+        margin-bottom: 0;
+      }
+
+      .contact-link {
+        color: var(--blue);
+        font-weight: 720;
+      }
+
+      @media (max-width: 880px) {
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 14px 20px;
+        }
+
+        .nav-actions {
+          flex-wrap: wrap;
+        }
+
+        .hero,
+        .grid,
+        .grid.two,
+        .steps {
+          grid-template-columns: 1fr;
+        }
+
+        main {
+          padding-top: 40px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        main {
+          padding-right: 16px;
+          padding-left: 16px;
+        }
+
+        h1 {
+          font-size: 32px;
+          line-height: 1.06;
+        }
+
+        .lead {
+          font-size: 17px;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .package-head {
+          display: grid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          Expo Release Rescue
+        </a>
+        <div class="nav-actions">
+          <a href="index.html">Expo rescue</a>
+          <a href="capability-statement.html">Capability</a>
+          <a class="button" href="mailto:badabadabing@live.com?subject=AI%20Implementation%20Sprint">Discuss a paid sprint</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <h1>AI Implementation Sprint for small teams that need working code.</h1>
+          <p class="lead">
+            Fixed-scope implementation help for Python automation, TypeScript web tools, AI-assisted workflows, agentic QA, and documentation-to-working-code tasks.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="mailto:badabadabing@live.com?subject=AI%20Implementation%20Sprint">Email a paid sprint</a>
+            <a class="button secondary" href="#packages">View packages</a>
+          </div>
+        </div>
+        <aside class="summary-panel" aria-label="Availability summary">
+          <strong>Best fit</strong>
+          <p>Short paid trials where a client already has a repo, workflow, spec, failing automation, or manual process that needs a focused implementation pass.</p>
+        </aside>
+      </section>
+
+      <section aria-labelledby="fit-title">
+        <div class="section-title">
+          <h2 id="fit-title">Work that can turn into a paid task quickly</h2>
+          <p>These are narrow enough to quote, execute, verify, and hand off without a long discovery phase.</p>
+        </div>
+        <div class="grid">
+          <article class="panel">
+            <h3>Python automation</h3>
+            <p>Scripts, data cleanup, browser-backed workflow checks, file conversion, scraping support where permitted, and operational tooling.</p>
+          </article>
+          <article class="panel">
+            <h3>TypeScript web tools</h3>
+            <p>Small dashboards, intake tools, landing pages, static service sites, workflow UIs, and frontend implementation from a clear brief.</p>
+          </article>
+          <article class="panel">
+            <h3>AI workflow implementation</h3>
+            <p>Prompt-to-tool workflows, evaluation checklists, agent task harnesses, structured output flows, and verification of AI-assisted operations.</p>
+          </article>
+          <article class="panel">
+            <h3>Agentic QA</h3>
+            <p>Browser QA, mobile release triage, reproducible bug reports, console/network evidence, and explicit pass/fail verification notes.</p>
+          </article>
+          <article class="panel">
+            <h3>Docs to working code</h3>
+            <p>Convert API docs, integration notes, or product specs into a runnable prototype, script, or focused implementation patch.</p>
+          </article>
+          <article class="panel">
+            <h3>Expo release support</h3>
+            <p>EAS Build, TestFlight, dependency, WebView, notification, and production bug work continues under the Expo Release Rescue offer.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="packages" aria-labelledby="packages-title">
+        <div class="section-title">
+          <h2 id="packages-title">Fixed-scope paid sprint packages</h2>
+          <p>Each package is built around a concrete deliverable, evidence, and a clear next step.</p>
+        </div>
+        <div class="grid">
+          <article class="package-card">
+            <div class="package-head">
+              <h3>Automation Diagnostic</h3>
+              <div class="price">$299</div>
+            </div>
+            <p>Review one broken workflow, script, or manual process and return a precise implementation plan or small fix.</p>
+            <ul class="feature-list">
+              <li>Input review and failure reproduction</li>
+              <li>Root-cause notes or implementation path</li>
+              <li>Small code/config fix when access is available</li>
+              <li>Verification commands or browser evidence</li>
+            </ul>
+            <div class="duration">1-2 business days</div>
+          </article>
+          <article class="package-card featured">
+            <div class="package-head">
+              <h3>Implementation Sprint</h3>
+              <div class="price">$799</div>
+            </div>
+            <p>Build one focused automation, web tool, integration slice, or AI-assisted workflow from a clear spec.</p>
+            <ul class="feature-list">
+              <li>One bounded implementation target</li>
+              <li>Python, TypeScript, React, or static web work</li>
+              <li>Scoped patch or deployable artifact</li>
+              <li>Handoff notes with exact verification evidence</li>
+            </ul>
+            <div class="duration">3-5 business days</div>
+          </article>
+          <article class="package-card">
+            <div class="package-head">
+              <h3>Agentic Workflow QA</h3>
+              <div class="price">$499</div>
+            </div>
+            <p>Audit an AI-assisted workflow, browser flow, or release path and turn vague failure reports into actionable evidence.</p>
+            <ul class="feature-list">
+              <li>Scenario review and pass/fail criteria</li>
+              <li>Browser, console, and output evidence</li>
+              <li>Failure taxonomy and fix priority</li>
+              <li>Small patch when the blocker is tightly scoped</li>
+            </ul>
+            <div class="duration">2-3 business days</div>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="process-title">
+        <div class="section-title">
+          <h2 id="process-title">Engagement process</h2>
+          <p>The fastest path is a paid trial with a repo, a failing workflow, or a clear deliverable.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <div class="step-index">1</div>
+            <h3>Send the target</h3>
+            <p class="muted">Repo, workflow, logs, spec, screenshots, current output, and desired output.</p>
+          </article>
+          <article class="step">
+            <div class="step-index">2</div>
+            <h3>Confirm scope</h3>
+            <p class="muted">One deliverable, one price, one acceptance path, and explicit non-goals.</p>
+          </article>
+          <article class="step">
+            <div class="step-index">3</div>
+            <h3>Implement</h3>
+            <p class="muted">Focused code, artifact, or QA evidence without unrelated rewrites.</p>
+          </article>
+          <article class="step">
+            <div class="step-index">4</div>
+            <h3>Verify</h3>
+            <p class="muted">Commands, screenshots, deployed URL, or reviewed output that proves what changed.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="boundaries-title">
+        <div class="section-title">
+          <h2 id="boundaries-title">Clear boundaries</h2>
+          <p>This offer is for execution-heavy work, not unverifiable claims or account-side operations.</p>
+        </div>
+        <div class="grid two">
+          <article class="panel">
+            <h3>Good fit</h3>
+            <p>Concrete implementation, debugging, QA, release help, automation, scripts, small web tools, and paid trials with clear acceptance criteria.</p>
+          </article>
+          <article class="panel">
+            <h3>Not a fit</h3>
+            <p>Creating accounts, signing platform agreements, KYC, payment binding, broad strategy decks, or claims about production systems that cannot be verified.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="proof-title">
+        <div class="section-title">
+          <h2 id="proof-title">Proof links</h2>
+          <p>Public assets that can be sent with outreach or used as contractor capability evidence.</p>
+        </div>
+        <div class="grid">
+          <article class="panel">
+            <h3>Expo Release Rescue</h3>
+            <p><a class="contact-link" href="index.html">Open the service page</a></p>
+          </article>
+          <article class="panel">
+            <h3>Capability statement</h3>
+            <p><a class="contact-link" href="capability-statement.html">Open contractor capability page</a></p>
+          </article>
+          <article class="panel">
+            <h3>Public repository</h3>
+            <p><a class="contact-link" href="https://github.com/badabadabing/expo-release-rescue">Open GitHub source</a></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta">
+        <h2>Send a paid implementation target.</h2>
+        <p class="muted">A useful first email includes the repo or artifact, exact target output, current blocker, deadline, and whether a fixed-scope paid trial is acceptable.</p>
+        <p><a class="button" href="mailto:badabadabing@live.com?subject=AI%20Implementation%20Sprint">Email the sprint brief</a></p>
+      </section>
+    </main>
+  </body>
+</html>
