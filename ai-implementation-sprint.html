@@ -239,6 +239,23 @@
         font-size: 14px;
       }
 
+      .pilot-strip {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 20px;
+        margin-top: 24px;
+        border: 1px solid #91d2aa;
+        border-radius: var(--radius);
+        background: #ffffff;
+        padding: 22px;
+      }
+
+      .pilot-strip p {
+        margin: 6px 0 0;
+        color: var(--muted);
+      }
+
       section {
         padding: 36px 0;
         border-bottom: 1px solid var(--line);
@@ -402,6 +419,7 @@
         }
 
         .hero,
+        .pilot-strip,
         .grid,
         .grid.two,
         .steps {
@@ -430,6 +448,10 @@
 
         .hero-actions {
           flex-direction: column;
+        }
+
+        .pilot-strip {
+          align-items: stretch;
         }
 
         .button {
@@ -477,6 +499,14 @@
           <strong>Best fit</strong>
           <p>Short paid trials where a client already has a repo, workflow, spec, failing automation, or manual process that needs a focused implementation pass.</p>
         </aside>
+      </section>
+
+      <section class="pilot-strip" aria-label="Fast-start paid pilot">
+        <div>
+          <h2>Fast-start paid pilot: $299-799, fixed scope before work starts.</h2>
+          <p>Best for one blocked Expo release, one broken Python automation, one React/TypeScript tool, or one AI workflow QA pass with clear acceptance evidence.</p>
+        </div>
+        <a class="button" href="mailto:badabadabing@live.com?subject=Fast-start%20paid%20pilot%20%24299-%24799&body=Paid%20pilot%20target%3A%0ARepo%20or%20artifact%3A%0ACurrent%20blocker%3A%0ADesired%20output%3A%0ADeadline%3A%0ABudget%20range%3A%0A">Request a paid pilot</a>
       </section>
 
       <section aria-labelledby="fit-title">
