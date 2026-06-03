@@ -1,0 +1,67 @@
+SERVICE NAME
+Expo Release Rescue
+
+LIVE SERVICE PAGE
+https://expo-release-rescue.vercel.app/
+
+CONTACT
+badabadabing@live.com
+
+PROFILE TITLE
+Expo / React Native Release Engineer - EAS Builds, TestFlight, App Store Fixes
+
+SHORT BIO
+I help Expo and React Native teams fix release blockers fast: EAS build failures, TestFlight and App Store submission errors, dependency conflicts, push notifications, WebView issues, and production-only bugs. I work in fixed scope, make the smallest direct change needed, and deliver clear verification steps.
+
+UPWORK / CONTRA PROPOSAL
+Hi, I can help with this.
+
+I work with Expo and React Native release issues, especially EAS builds, TestFlight, App Store submission, dependency conflicts, push notifications, WebView behavior, and production-only bugs.
+
+I would first reproduce the blocker from your logs or repo, then make the smallest scoped change needed to unblock the release. I will send the exact verification steps so you can confirm the fix on your side.
+
+To start, please share the repo or a minimal reproduction, the current error output, platform target, EAS build profile, and the release deadline.
+
+FIVERR / MARKETPLACE GIG DESCRIPTION
+I will fix your Expo or React Native release blocker.
+
+Best fit:
+- EAS build failures
+- TestFlight or App Store Connect submission errors
+- Expo prebuild or config plugin issues
+- Dependency and native module conflicts
+- Push notification setup problems
+- WebView, deep link, or release-only production bugs
+
+What you get:
+- Focused diagnosis
+- Smallest scoped code/config fix
+- Clear handoff notes
+- Verification steps so you know the blocker is closed
+
+Please send the exact error output, repo or minimal reproduction, target platform, and deadline before ordering.
+
+FIXED-SCOPE PACKAGES
+Build Rescue - $399
+Fix Expo or EAS build failures and produce a successful build path. Typical delivery: 2-3 business days.
+
+Release Rescue - $699
+Get the app submitted to TestFlight or prepared for App Store Connect. Typical delivery: 3-5 business days.
+
+Stability Rescue - $499
+Fix one production issue and improve release confidence. Typical delivery: 2-4 business days.
+
+CLIENT INTAKE QUESTIONS
+1. What app are you shipping?
+2. Is the blocker iOS, Android, or both?
+3. What exact error output do you see?
+4. Which command or release step fails?
+5. Can you share the repo, minimal reproduction, or screenshots?
+6. What EAS build profile and Expo SDK version are you using?
+7. What is your release deadline?
+
+DO NOT ACCEPT
+- Requests to bypass captcha, platform rules, payment systems, or account restrictions.
+- Requests to scrape private data or impersonate users.
+- Requests with no repo, no error output, and no verifiable deliverable.
+- Free full fixes disguised as unpaid tests.

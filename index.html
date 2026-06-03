@@ -1,0 +1,1423 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expo Release Rescue</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Cpath d='M8 17l5 5L24 10' fill='none' stroke='%23168347' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <meta
+      name="description"
+      content="Fixed-scope Expo and React Native release help for EAS builds, TestFlight, App Store submission, dependency conflicts, and production bugs."
+    >
+    <meta property="og:title" content="Expo Release Rescue">
+    <meta property="og:description" content="Fixed-scope Expo and React Native release help for EAS builds, TestFlight, App Store submission, dependency conflicts, and production bugs.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://expo-release-rescue.vercel.app/">
+    <meta property="og:image" content="https://expo-release-rescue.vercel.app/assets/hero-build-success.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Expo Release Rescue",
+        "url": "https://expo-release-rescue.vercel.app/",
+        "email": "badabadabing@live.com",
+        "areaServed": "Worldwide",
+        "serviceType": "Expo and React Native release engineering",
+        "description": "Fixed-scope Expo and React Native release help for EAS builds, TestFlight, App Store submission, dependency conflicts, push notifications, WebView issues, and production bugs."
+      }
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f9fb;
+        --paper: #ffffff;
+        --ink: #121826;
+        --muted: #5c6676;
+        --line: #dbe2ea;
+        --line-strong: #b9c7d8;
+        --blue: #0b5cff;
+        --blue-dark: #0742bd;
+        --green: #168347;
+        --green-soft: #e8f7ee;
+        --shadow: 0 18px 50px rgba(18, 24, 38, 0.11);
+        --radius: 8px;
+        --max: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.5;
+      }
+
+      body.modal-open {
+        overflow: hidden;
+      }
+
+      img,
+      svg {
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(219, 226, 234, 0.8);
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: var(--max);
+        min-height: 70px;
+        margin: 0 auto;
+        padding: 0 24px;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 22px;
+        font-weight: 760;
+        letter-spacing: 0;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid #c7d5e6;
+        border-radius: 8px;
+        color: var(--green);
+        background: #fff;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: #2e3847;
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .nav-links a {
+        padding: 10px 0;
+      }
+
+      .nav-links a:hover {
+        color: var(--blue);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 46px;
+        padding: 0 18px;
+        border: 1px solid transparent;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 740;
+        line-height: 1;
+        white-space: nowrap;
+        transition:
+          transform 160ms ease,
+          background 160ms ease,
+          border-color 160ms ease,
+          color 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button.primary {
+        background: var(--blue);
+        color: #fff;
+        box-shadow: 0 10px 24px rgba(11, 92, 255, 0.22);
+      }
+
+      .button.primary:hover {
+        background: var(--blue-dark);
+      }
+
+      .button.secondary {
+        border-color: #9ebcff;
+        background: #fff;
+        color: var(--blue);
+      }
+
+      .button.secondary:hover {
+        border-color: var(--blue);
+      }
+
+      .button.ghost {
+        border-color: var(--line);
+        background: #fff;
+        color: var(--ink);
+      }
+
+      .button.small {
+        min-height: 40px;
+        padding: 0 14px;
+        font-size: 13px;
+      }
+
+      .icon {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+      }
+
+      .hero {
+        background: linear-gradient(180deg, #fff 0%, #f6f9fc 100%);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: minmax(430px, 1fr) minmax(360px, 0.95fr);
+        align-items: center;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 50px 24px 36px;
+        gap: 38px;
+      }
+
+      .hero-copy {
+        max-width: 620px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        max-width: 680px;
+        font-size: clamp(42px, 5vw, 62px);
+        line-height: 1.04;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .hero-copy > p {
+        max-width: 580px;
+        margin-top: 22px;
+        color: #455163;
+        font-size: 18px;
+        line-height: 1.55;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+        margin-top: 30px;
+      }
+
+      .trust-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 22px;
+        margin-top: 32px;
+      }
+
+      .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #253044;
+        font-size: 14px;
+        font-weight: 650;
+        white-space: nowrap;
+      }
+
+      .trust-dot {
+        display: grid;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #9ed7b5;
+        border-radius: 50%;
+        color: var(--green);
+        background: #f5fff8;
+        font-size: 13px;
+        line-height: 1;
+      }
+
+      .hero-visual {
+        position: relative;
+      }
+
+      .hero-visual img {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .availability-card {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        width: min(260px, calc(100% - 36px));
+        padding: 16px;
+        border: 1px solid rgba(185, 199, 216, 0.85);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 16px 36px rgba(18, 24, 38, 0.16);
+        backdrop-filter: blur(10px);
+      }
+
+      .availability-card strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .availability-card span {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      main section {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 54px 24px;
+      }
+
+      main section.hero {
+        max-width: none;
+        padding: 0;
+      }
+
+      .section-title {
+        max-width: 720px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(28px, 4vw, 38px);
+        line-height: 1.12;
+        font-weight: 780;
+        letter-spacing: 0;
+      }
+
+      .section-title p {
+        margin-top: 9px;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .checklist-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+
+      .check-card,
+      .package-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+      }
+
+      .check-card {
+        min-height: 172px;
+        padding: 20px;
+      }
+
+      .check-card svg {
+        width: 28px;
+        height: 28px;
+        color: var(--green);
+      }
+
+      .check-card h3 {
+        margin-top: 22px;
+        font-size: 16px;
+        line-height: 1.25;
+      }
+
+      .check-card p {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .packages {
+        background: #fff;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .package-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .package-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 360px;
+        padding: 24px;
+      }
+
+      .package-card.featured {
+        border-color: #91d2aa;
+        box-shadow: 0 16px 42px rgba(22, 131, 71, 0.11);
+      }
+
+      .package-card.featured::before {
+        content: "Most requested";
+        position: absolute;
+        top: -14px;
+        left: 24px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        background: var(--green);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 780;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .package-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .package-head h3 {
+        font-size: 22px;
+        line-height: 1.2;
+      }
+
+      .price {
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .package-card p {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .feature-list {
+        display: grid;
+        gap: 12px;
+        margin: 24px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .feature-list li {
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr);
+        gap: 9px;
+        color: #303b4c;
+        font-size: 14px;
+      }
+
+      .feature-list li::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background:
+          linear-gradient(var(--green), var(--green)) center 9px / 9px 2px no-repeat,
+          linear-gradient(135deg, transparent 42%, var(--green) 43% 57%, transparent 58%) 4px 3px / 10px 10px no-repeat,
+          var(--green-soft);
+      }
+
+      .duration {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+        padding-top: 26px;
+        color: #344154;
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .process-row {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+      }
+
+      .process-row::before {
+        content: "";
+        position: absolute;
+        top: 24px;
+        right: 8%;
+        left: 8%;
+        height: 2px;
+        background: #cbd6e3;
+      }
+
+      .step {
+        position: relative;
+        text-align: center;
+      }
+
+      .step-index {
+        display: grid;
+        place-items: center;
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 14px;
+        border: 6px solid var(--bg);
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        font-weight: 780;
+      }
+
+      .step h3 {
+        font-size: 15px;
+      }
+
+      .step p {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .intake {
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+        padding-top: 30px;
+      }
+
+      .intake-aside {
+        position: sticky;
+        top: 94px;
+      }
+
+      .intake-aside h2 {
+        font-size: 30px;
+        line-height: 1.14;
+      }
+
+      .intake-aside p {
+        margin-top: 10px;
+        color: var(--muted);
+      }
+
+      .form-panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+        padding: 22px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+      }
+
+      .field.wide {
+        grid-column: span 3;
+      }
+
+      .field.half {
+        grid-column: span 2;
+      }
+
+      label {
+        color: #2f3a4a;
+        font-size: 13px;
+        font-weight: 720;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fff;
+        color: var(--ink);
+        padding: 10px 12px;
+        font-size: 14px;
+        outline: none;
+      }
+
+      textarea {
+        min-height: 96px;
+        resize: vertical;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(11, 92, 255, 0.12);
+      }
+
+      .form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .status {
+        min-height: 22px;
+        margin-top: 12px;
+        color: var(--green);
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .status.error {
+        color: #b42318;
+      }
+
+      .platform-kit {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .kit-panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 22px;
+      }
+
+      .kit-panel h2 {
+        font-size: 28px;
+        line-height: 1.15;
+      }
+
+      .kit-panel p {
+        margin-top: 10px;
+        color: var(--muted);
+      }
+
+      .proposal {
+        margin: 0;
+        white-space: pre-wrap;
+        color: #263246;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .site-footer {
+        border-top: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 24px;
+        color: var(--muted);
+        font-size: 13px;
+        gap: 16px;
+      }
+
+      .contact-link {
+        color: var(--blue);
+        font-weight: 720;
+      }
+
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: none;
+        place-items: center;
+        padding: 20px;
+        background: rgba(18, 24, 38, 0.52);
+      }
+
+      .modal.open {
+        display: grid;
+      }
+
+      .modal-card {
+        width: min(760px, 100%);
+        max-height: min(720px, calc(100vh - 40px));
+        overflow: auto;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 26px 80px rgba(18, 24, 38, 0.3);
+      }
+
+      .modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .modal-head h2 {
+        font-size: 22px;
+      }
+
+      .close-btn {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .summary-box {
+        margin: 20px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #f9fbfd;
+        white-space: pre-wrap;
+        color: #263246;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .modal-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 0 20px 20px;
+      }
+
+      @media (max-width: 980px) {
+        .hero-inner,
+        .intake,
+        .platform-kit {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-inner {
+          min-height: auto;
+          padding-top: 42px;
+        }
+
+        .intake-aside {
+          position: static;
+        }
+
+        .checklist-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .package-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .process-row {
+          grid-template-columns: 1fr;
+          text-align: left;
+        }
+
+        .process-row::before {
+          display: none;
+        }
+
+        .step {
+          display: grid;
+          grid-template-columns: 54px minmax(0, 1fr);
+          gap: 14px;
+          text-align: left;
+        }
+
+        .step-index {
+          margin: 0;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .nav {
+          min-height: 62px;
+          padding: 0 16px;
+        }
+
+        .brand {
+          font-size: 18px;
+        }
+
+        .brand-mark {
+          width: 30px;
+          height: 30px;
+        }
+
+        .hero-inner,
+        main section {
+          padding-right: 16px;
+          padding-left: 16px;
+        }
+
+        .hero-inner {
+          padding-top: 28px;
+          padding-bottom: 22px;
+          gap: 24px;
+        }
+
+        .hero-copy > p {
+          margin-top: 16px;
+          font-size: 16px;
+        }
+
+        h1 {
+          font-size: 32px;
+          line-height: 1.06;
+        }
+
+        .hero-actions {
+          margin-top: 22px;
+        }
+
+        .trust-row {
+          gap: 10px 16px;
+          margin-top: 20px;
+        }
+
+        .button {
+          min-height: 44px;
+        }
+
+        .hero-actions,
+        .form-actions,
+        .modal-actions {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .trust-row,
+        .checklist-grid,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .field,
+        .field.half,
+        .field.wide {
+          grid-column: auto;
+        }
+
+        .hero-visual img {
+          max-height: 178px;
+          aspect-ratio: 16 / 9;
+        }
+
+        .availability-card {
+          position: absolute;
+          right: 10px;
+          bottom: 10px;
+          width: min(230px, calc(100% - 20px));
+          margin-top: 0;
+          padding: 12px;
+        }
+
+        .availability-card strong {
+          font-size: 13px;
+        }
+
+        .availability-card span {
+          font-size: 12px;
+        }
+
+        .footer-inner {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Expo Release Rescue home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          Expo Release Rescue
+        </a>
+        <div class="nav-links">
+          <a href="#diagnostic">Diagnostic</a>
+          <a href="#packages">Packages</a>
+          <a href="#process">Process</a>
+          <a href="#intake">Intake</a>
+          <a class="button primary small" href="#intake">Email the issue</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <h1 id="hero-title">I fix Expo builds and get your app shipped.</h1>
+            <p>
+              Fixed-scope help for Expo and React Native apps stuck on EAS builds,
+              TestFlight, App Store submission, dependency conflicts, or production bugs.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#intake">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                  <path d="M4.5 7l7.5 6 7.5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                Email the issue
+              </a>
+              <a class="button secondary" href="#packages">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 3h7l5 5v13H7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                  <path d="M14 3v5h5M10 13h6M10 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                </svg>
+                View fixed-scope packages
+              </a>
+            </div>
+            <div class="trust-row" aria-label="Service guarantees">
+              <div class="trust-item"><span class="trust-dot">&check;</span> Senior engineer</div>
+              <div class="trust-item"><span class="trust-dot">&check;</span> Fixed scope</div>
+              <div class="trust-item"><span class="trust-dot">&check;</span> Fast response</div>
+              <div class="trust-item"><span class="trust-dot">&check;</span> Clear handoff</div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <img src="assets/hero-build-success.png" alt="Laptop and phone showing a successful mobile app build">
+            <div class="availability-card" aria-label="Availability">
+              <strong>First response within 24 hours</strong>
+              <span>Send logs, repo access, and the exact release blocker.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="diagnostic" aria-labelledby="diagnostic-title">
+        <div class="section-title">
+          <h2 id="diagnostic-title">Diagnostic checklist for stuck releases</h2>
+          <p>If any of these sound familiar, the issue is a good fit for a fixed-scope rescue.</p>
+        </div>
+        <div class="checklist-grid">
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 6l4-4 2 2-4 4M7 17l-4 4-2-2 4-4M6 15l9-9 3 3-9 9H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+            </svg>
+            <h3>Expo / EAS build failures</h3>
+            <p>Install errors, prebuild issues, config plugins, native modules, or failed cloud builds.</p>
+          </article>
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3l7 18M12 3L5 21M8 14h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+            <h3>TestFlight / App Store</h3>
+            <p>ITMS errors, archive export, app thinning, metadata, assets, and submission blockers.</p>
+          </article>
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM12 12l8-4.5M12 12v9M12 12L4 7.5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+            </svg>
+            <h3>Dependency conflicts</h3>
+            <p>Version mismatches, peer deps, native module errors, Metro issues, and config drift.</p>
+          </article>
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 17H5l2-3V9a5 5 0 0110 0v5l2 3h-4zM10 21h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <h3>Push notifications</h3>
+            <p>FCM, APNs, permissions, tokens, background handlers, and release-only failures.</p>
+          </article>
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <h3>WebView issues</h3>
+            <p>Cookies, deep links, content blocking, auth callbacks, in-app browser, and crashes.</p>
+          </article>
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 3h8v18H8zM11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <h3>iOS / Android native setup</h3>
+            <p>Capabilities, signing, entitlements, Gradle, manifests, permissions, and profiles.</p>
+          </article>
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 16a4 4 0 010-8 5 5 0 019.6-1.8A4.5 4.5 0 1117 16h-2M12 12v9M8.5 15.5L12 12l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <h3>OTA / Updates</h3>
+            <p>EAS Update runtime versions, channels, branch setup, and update configuration.</p>
+          </article>
+          <article class="check-card">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 8v4l3 3M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <h3>Production bugs</h3>
+            <p>Release-only crashes, edge cases, small hotfixes, runtime behavior, and verification.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="packages" class="packages" aria-labelledby="packages-title">
+        <div class="section-title">
+          <h2 id="packages-title">Fixed-scope packages</h2>
+          <p>Clear scope, predictable price, and a deliverable that tells the client exactly how to verify the fix.</p>
+        </div>
+        <div class="package-grid">
+          <article class="package-card">
+            <div class="package-head">
+              <h3>Build Rescue</h3>
+              <div class="price">$399</div>
+            </div>
+            <p>Fix Expo or EAS build failures and produce a successful build path.</p>
+            <ul class="feature-list">
+              <li>Diagnose and fix build errors</li>
+              <li>Resolve dependency or native module issues</li>
+              <li>Clean up EAS build configuration</li>
+              <li>Deliver verification steps and command output</li>
+            </ul>
+            <div class="duration">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 7v5l3 2M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+              2-3 business days
+            </div>
+          </article>
+          <article class="package-card featured">
+            <div class="package-head">
+              <h3>Release Rescue</h3>
+              <div class="price">$699</div>
+            </div>
+            <p>Get the app submitted to TestFlight or prepared for App Store Connect.</p>
+            <ul class="feature-list">
+              <li>Includes Build Rescue scope</li>
+              <li>Fix submission errors, metadata, or assets</li>
+              <li>Configure signing, profiles, and export options</li>
+              <li>Submit or prepare the archive for client submission</li>
+            </ul>
+            <div class="duration">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 7v5l3 2M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+              3-5 business days
+            </div>
+          </article>
+          <article class="package-card">
+            <div class="package-head">
+              <h3>Stability Rescue</h3>
+              <div class="price">$499</div>
+            </div>
+            <p>Fix one production issue and improve the release confidence.</p>
+            <ul class="feature-list">
+              <li>Investigate and fix a production bug</li>
+              <li>Push notification, WebView, or runtime fix</li>
+              <li>Small improvement or hotfix scope</li>
+              <li>Verification on real device or simulator evidence</li>
+            </ul>
+            <div class="duration">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 7v5l3 2M4 12a8 8 0 1116 0 8 8 0 01-16 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+              2-4 business days
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="process" aria-labelledby="process-title">
+        <div class="section-title">
+          <h2 id="process-title">How the rescue works</h2>
+          <p>The client sends evidence, the scope is confirmed, then the fix is delivered with verification steps.</p>
+        </div>
+        <div class="process-row">
+          <article class="step">
+            <div class="step-index">1</div>
+            <div>
+              <h3>You reach out</h3>
+              <p>Send logs, screenshots, repo access, and current release blocker.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="step-index">2</div>
+            <div>
+              <h3>Scope and quote</h3>
+              <p>I confirm the smallest fixed scope, delivery time, and price.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="step-index">3</div>
+            <div>
+              <h3>Fix and deliver</h3>
+              <p>The repo gets the focused change needed to unblock release.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="step-index">4</div>
+            <div>
+              <h3>Verify together</h3>
+              <p>You test the fix and receive exact verification notes.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="step-index">5</div>
+            <div>
+              <h3>Ship with confidence</h3>
+              <p>The release blocker is closed or the remaining blocker is explicit.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="intake" aria-labelledby="intake-title">
+        <div class="intake">
+          <aside class="intake-aside">
+            <h2 id="intake-title">Client intake that turns vague issues into paid scope</h2>
+            <p>
+              Fill this with the client or paste their details. It creates a structured
+              email draft and a concise issue brief you can copy into Upwork, Contra, or email.
+            </p>
+            <p>
+              Direct intake: <a class="contact-link" href="mailto:badabadabing@live.com">badabadabing@live.com</a>
+            </p>
+          </aside>
+          <form class="form-panel" id="intakeForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="clientName">Client name</label>
+                <input id="clientName" name="clientName" autocomplete="name" placeholder="Jane Founder">
+              </div>
+              <div class="field">
+                <label for="clientEmail">Client email</label>
+                <input id="clientEmail" name="clientEmail" type="email" autocomplete="email" placeholder="jane@yourapp.com">
+              </div>
+              <div class="field">
+                <label for="appName">App name</label>
+                <input id="appName" name="appName" placeholder="YourApp">
+              </div>
+              <div class="field">
+                <label for="platform">Platform</label>
+                <select id="platform" name="platform">
+                  <option>iOS / Android / Both</option>
+                  <option>iOS only</option>
+                  <option>Android only</option>
+                  <option>Expo web</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="package">Package</label>
+                <select id="package" name="package">
+                  <option>Release Rescue - $699</option>
+                  <option>Build Rescue - $399</option>
+                  <option>Stability Rescue - $499</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="urgency">Urgency</label>
+                <select id="urgency" name="urgency">
+                  <option>Normal</option>
+                  <option>Urgent this week</option>
+                  <option>Blocked today</option>
+                </select>
+              </div>
+              <div class="field wide">
+                <label for="summary">Brief summary</label>
+                <textarea id="summary" name="summary" required placeholder="One or two sentences describing the release blocker."></textarea>
+              </div>
+              <div class="field half">
+                <label for="details">What is happening?</label>
+                <textarea id="details" name="details" placeholder="Steps to reproduce, expected vs actual behavior, exact error messages, where it happens."></textarea>
+              </div>
+              <div class="field">
+                <label for="access">Repo / access</label>
+                <textarea id="access" name="access" placeholder="GitHub link, EAS project, Expo account access, App Store Connect state."></textarea>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="button primary" type="submit">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                  <path d="M4.5 7l7.5 6 7.5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                Create email draft
+              </button>
+              <button class="button ghost" type="button" id="copyBriefBtn">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M8 8h11v13H8zM5 3h11v4M5 3v13h2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                </svg>
+                Copy issue brief
+              </button>
+            </div>
+            <div class="status" id="formStatus" aria-live="polite"></div>
+          </form>
+        </div>
+      </section>
+
+      <section aria-labelledby="platform-kit-title">
+        <div class="platform-kit">
+          <div class="kit-panel">
+            <h2 id="platform-kit-title">Marketplace copy ready to paste</h2>
+            <p>
+              This is tuned for Upwork, Contra, Fiverr, and direct founder outreach.
+              It sells a narrow outcome instead of a vague developer profile.
+            </p>
+            <div class="form-actions">
+              <button class="button secondary" type="button" id="copyProposalBtn">Copy proposal</button>
+              <button class="button ghost" type="button" id="copyGigBtn">Copy gig description</button>
+            </div>
+            <div class="status" id="kitStatus" aria-live="polite"></div>
+          </div>
+          <div class="kit-panel">
+            <pre class="proposal" id="proposalText">Hi, I can help with this.
+
+I work with Expo and React Native release issues, especially EAS builds, TestFlight, App Store submission, dependency conflicts, push notifications, WebView behavior, and production-only bugs.
+
+I would first reproduce the blocker from your logs or repo, then make the smallest scoped change needed to unblock the release. I will send the exact verification steps so you can confirm the fix on your side.
+
+To start, please share the repo or a minimal reproduction, the current error output, platform target, EAS build profile, and the release deadline.</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>Expo Release Rescue. Fixed-scope mobile release help.</span>
+        <span>Built for direct outreach, Upwork, Contra, and Fiverr profiles.</span>
+      </div>
+    </footer>
+
+    <div class="modal" id="summaryModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h2 id="modalTitle">Issue brief</h2>
+          <button class="close-btn" type="button" id="closeModalBtn" aria-label="Close issue brief">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="summary-box" id="summaryBox"></div>
+        <div class="modal-actions">
+          <button class="button primary" type="button" id="openMailBtn">Open email client</button>
+          <button class="button secondary" type="button" id="copyModalBtn">Copy brief</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("intakeForm");
+      const formStatus = document.getElementById("formStatus");
+      const kitStatus = document.getElementById("kitStatus");
+      const modal = document.getElementById("summaryModal");
+      const summaryBox = document.getElementById("summaryBox");
+      const openMailBtn = document.getElementById("openMailBtn");
+      const copyModalBtn = document.getElementById("copyModalBtn");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+      const copyBriefBtn = document.getElementById("copyBriefBtn");
+      const copyProposalBtn = document.getElementById("copyProposalBtn");
+      const copyGigBtn = document.getElementById("copyGigBtn");
+      const proposalText = document.getElementById("proposalText");
+      const contactEmail = "badabadabing@live.com";
+      let latestBrief = "";
+
+      const gigText = `I will fix your Expo or React Native release blocker.
+
+Best fit:
+- EAS build failures
+- TestFlight or App Store Connect submission errors
+- Expo prebuild or config plugin issues
+- Dependency and native module conflicts
+- Push notification setup problems
+- WebView, deep link, or release-only production bugs
+
+What you get:
+- Focused diagnosis
+- Smallest scoped code/config fix
+- Clear handoff notes
+- Verification steps so you know the blocker is closed
+
+Please send the exact error output, repo or minimal reproduction, target platform, and deadline before ordering.`;
+
+      function fieldValue(name) {
+        return new FormData(form).get(name)?.toString().trim() || "Not provided";
+      }
+
+      function buildBrief() {
+        return `Expo Release Rescue intake
+
+Client: ${fieldValue("clientName")}
+Client email: ${fieldValue("clientEmail")}
+App: ${fieldValue("appName")}
+Platform: ${fieldValue("platform")}
+Package: ${fieldValue("package")}
+Urgency: ${fieldValue("urgency")}
+
+Brief summary:
+${fieldValue("summary")}
+
+What is happening:
+${fieldValue("details")}
+
+Repo / access:
+${fieldValue("access")}
+
+Next step:
+Please share logs, screenshots, repo access if possible, current EAS build profile, and the exact release deadline.`;
+      }
+
+      async function copyText(text, statusElement, successText) {
+        if (!navigator.clipboard) {
+          statusElement.textContent = "Clipboard is unavailable in this browser. Select and copy the text manually.";
+          statusElement.classList.add("error");
+          return;
+        }
+        await navigator.clipboard.writeText(text);
+        statusElement.textContent = successText;
+        statusElement.classList.remove("error");
+      }
+
+      function openModal() {
+        summaryBox.textContent = latestBrief;
+        modal.classList.add("open");
+        document.body.classList.add("modal-open");
+      }
+
+      function closeModal() {
+        modal.classList.remove("open");
+        document.body.classList.remove("modal-open");
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!form.checkValidity()) {
+          formStatus.textContent = "Add a brief summary before creating the email draft.";
+          formStatus.classList.add("error");
+          return;
+        }
+        latestBrief = buildBrief();
+        formStatus.textContent = "Email draft created.";
+        formStatus.classList.remove("error");
+        openModal();
+      });
+
+      copyBriefBtn.addEventListener("click", async () => {
+        latestBrief = buildBrief();
+        await copyText(latestBrief, formStatus, "Issue brief copied.");
+      });
+
+      copyModalBtn.addEventListener("click", async () => {
+        await copyText(latestBrief, formStatus, "Issue brief copied.");
+      });
+
+      openMailBtn.addEventListener("click", () => {
+        const subject = encodeURIComponent("Expo Release Rescue intake");
+        const body = encodeURIComponent(latestBrief);
+        window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+      });
+
+      closeModalBtn.addEventListener("click", closeModal);
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeModal();
+        }
+      });
+
+      copyProposalBtn.addEventListener("click", async () => {
+        await copyText(proposalText.textContent.trim(), kitStatus, "Proposal copied.");
+      });
+
+      copyGigBtn.addEventListener("click", async () => {
+        await copyText(gigText, kitStatus, "Gig description copied.");
+      });
+    </script>
+  </body>
+</html>
